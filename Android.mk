@@ -32,11 +32,14 @@ LOCAL_MODULE_TAGS := optional
 LOCAL_USE_AAPT2 := true
 
 LOCAL_STATIC_ANDROID_LIBRARIES += \
-    android-support-car \
+    androidx.car_car \
     car-apps-common \
     car-stream-ui-lib \
-    android-arch-lifecycle-extensions \
+    androidx.lifecycle_lifecycle-extensions \
+    android-support-constraint-layout \
 
+LOCAL_STATIC_JAVA_LIBRARIES := \
+    android-support-constraint-layout-solver
 
 LOCAL_PROGUARD_ENABLED := disabled
 
