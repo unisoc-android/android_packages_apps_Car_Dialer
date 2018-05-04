@@ -33,7 +33,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.car.dialer.telecom.PhoneLoader;
 import com.android.car.dialer.telecom.TelecomUtils;
 import com.android.car.dialer.telecom.UiCallManager;
-import com.android.car.view.CardListBackgroundResolver;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -252,9 +251,6 @@ public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
             viewHolder.callTypeIconsView.add(callTypes[i]);
         }
 
-        CardListBackgroundResolver.setBackground(viewHolder.card,
-                viewHolder.getAdapterPosition(), getItemCount());
-
         TelecomUtils.setContactBitmapAsync(mContext, viewHolder.icon, primaryText, number);
     }
 
@@ -324,10 +320,9 @@ public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
     private void onBindView(final CallLogViewHolder viewHolder, final ContactEntry entry) {
         viewHolder.itemView.setOnClickListener(v -> onViewClicked(viewHolder));
 
-        final String number = entry.number;
-        // TODO(mcrico): Why is being a voicemail related to not having a name?
-        boolean isVoicemail = (entry.name == null)
-                && (number.equals(TelecomUtils.getVoicemailNumber(mContext)));
+        final String number = entry.getNumber();
+        // TODO: Why is being a voicemail related to not having a name?
+        boolean isVoicemail = entry.isVoicemail();
         String secondaryText = "";
         if (!isVoicemail) {
             secondaryText = String.valueOf(TelecomUtils.getTypeFromNumber(mContext, number));
@@ -342,7 +337,7 @@ public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
 
         TelecomUtils.setContactBitmapAsync(mContext, viewHolder.icon, displayName, number);
 
-        if (entry.isStarred) {
+        if (entry.isStarred()) {
             viewHolder.smallIcon.setVisibility(View.VISIBLE);
             final int iconColor = mContext.getColor(android.R.color.white);
             viewHolder.smallIcon.setColorFilter(iconColor, PorterDuff.Mode.SRC_IN);
@@ -351,8 +346,6 @@ public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
             viewHolder.smallIcon.setVisibility(View.GONE);
         }
 
-        CardListBackgroundResolver.setBackground(viewHolder.card,
-                viewHolder.getAdapterPosition(), getItemCount());
     }
 
     /**

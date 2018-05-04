@@ -33,13 +33,15 @@ LOCAL_USE_AAPT2 := true
 
 LOCAL_STATIC_ANDROID_LIBRARIES += \
     androidx.car_car \
-    car-apps-common \
-    car-stream-ui-lib \
     androidx.lifecycle_lifecycle-extensions \
-    android-support-constraint-layout \
+    androidx-constraintlayout_constraintlayout \
+    androidx.cardview_cardview \
+    car-apps-common \
+    car-stream-ui-lib
 
 LOCAL_STATIC_JAVA_LIBRARIES := \
-    android-support-constraint-layout-solver
+    androidx-constraintlayout_constraintlayout-solver \
+    guava
 
 LOCAL_PROGUARD_ENABLED := disabled
 
