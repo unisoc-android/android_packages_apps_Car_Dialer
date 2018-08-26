@@ -42,6 +42,7 @@ import com.android.car.dialer.ui.calllog.CallHistoryFragment;
 import com.android.car.dialer.ui.common.DialerBaseFragment;
 import com.android.car.dialer.ui.contact.ContactListFragment;
 import com.android.car.dialer.ui.dialpad.DialpadFragment;
+import com.android.car.dialer.ui.search.ContactSearchActivity;
 import com.android.car.dialer.ui.strequent.StrequentsFragment;
 import com.android.car.dialer.ui.warning.NoHfpFragment;
 
@@ -199,10 +200,9 @@ public class TelecomActivity extends CarDrawerActivity implements
     /**
      * Updates the content fragment of this Activity based on the state of the application.
      */
+    // TODO: refactor the TelecomActivity to use LiveData for controlling current visible Fragment.
     private void updateCurrentFragment() {
-        if (vdebug()) {
-            Log.d(TAG, "updateCurrentFragment()");
-        }
+        L.d(TAG, "updateCurrentFragment()");
 
         if (!mBluetoothErrorMsgLiveData.getValue().equals(TelecomActivityViewModel.NO_BT_ERROR)) {
             showNoHfpFragment(mBluetoothErrorMsgLiveData.getValue());
@@ -210,12 +210,13 @@ public class TelecomActivity extends CarDrawerActivity implements
             boolean hasOngoingCall = mHasOngoingCallLiveData.getValue() != null
                     ? mHasOngoingCallLiveData.getValue()
                     : false;
+            Fragment currentFragment = getCurrentFragment();
 
-            if (!hasOngoingCall && getCurrentFragment() instanceof InCallFragment) {
-                showSpeedDialFragment();
-            } else if (hasOngoingCall) {
+            if (hasOngoingCall) {
                 showOngoingCallFragment();
-            } else if (getCurrentFragment() == null) {
+            } else if (currentFragment == null
+                    || currentFragment instanceof InCallFragment
+                    || currentFragment instanceof NoHfpFragment){
                 showSpeedDialFragment();
             }
         }
