@@ -60,9 +60,10 @@ public class PhoneCallLog {
             return mCallType;
         }
 
+        /** Phone call records are sort in reverse chronological order. */
         @Override
         public int compareTo(Record otherRecord) {
-            return (int) (mCallEndTimestamp - otherRecord.getCallEndTimestamp());
+            return (int) (otherRecord.mCallEndTimestamp - mCallEndTimestamp);
         }
     }
 
@@ -95,16 +96,9 @@ public class PhoneCallLog {
      */
     public long getLastCallEndTimestamp() {
         if (!mCallRecords.isEmpty()) {
-            return mCallRecords.get(mCallRecords.size() - 1).getCallEndTimestamp();
+            return mCallRecords.get(0).getCallEndTimestamp();
         }
         return -1;
-    }
-
-    /**
-     * Returns the number of call records in this call log.
-     */
-    public int getNumberOfCallRecords() {
-        return mCallRecords.size();
     }
 
     /**
@@ -119,12 +113,13 @@ public class PhoneCallLog {
      * Merges all call records with this call log's call records if they are representing the same
      * phone number.
      */
-    public void merge(@Nonnull PhoneCallLog phoneCallLog) {
+    public boolean merge(@Nonnull PhoneCallLog phoneCallLog) {
         if (PhoneNumberUtils.compare(mPhoneNumberString, phoneCallLog.mPhoneNumberString)) {
             L.d(TAG, "Merging call log %s", phoneCallLog.getAllCallRecords());
             mCallRecords.addAll(phoneCallLog.mCallRecords);
             Collections.sort(mCallRecords);
-            Collections.reverse(mCallRecords);
+            return true;
         }
+        return false;
     }
 }
