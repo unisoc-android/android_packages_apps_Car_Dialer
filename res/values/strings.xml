@@ -30,6 +30,10 @@
     <string name="error_airplane_mode">Phone is in airplane mode.</string>
     <!-- Toast text when a call failed because bluetooth hfp is not available [CHAR LIMIT=40] -->
     <string name="error_no_hfp">Bluetooth is not connected.</string>
+    <!-- Button text for making emergency call [CHAR LIMIT=40] -->
+    <string name="emergency_button_text">Emergency</string>
+    <!-- Text indicating emergency call [CHAR LIMIT=40] -->
+    <string name="emergency_call_description">Emergency call</string>
     <!-- Message informing user that the contact has already been deleted [CHAR LIMIT=120] -->
     <string name="error_contact_deleted">This contact might have been deleted.</string>
     <!-- Call status shown while a call is ongoing [CHAR LIMIT=40] -->
@@ -103,6 +107,7 @@
     <string name="zero_letters">+</string>
 
     <!-- Using spaces here so that the positioning of the number is consistent. -->
+    <string name="one_letters"> </string>
     <string name="star_letters"> </string>
     <string name="pound_letters"> </string>
 
@@ -117,7 +122,7 @@
     <string name="select_number_dialog_title">Choose a phone number</string>
     <string name="select_number_dialog_just_once_button">Just once</string>
     <string name="select_number_dialog_always_button">Always</string>
-    <string name="set_defaults_dialog_title">Set defaults</string>
+    <string name="set_defaults">Set defaults</string>
     <string name="primary_number_description">
         <xliff:g id="label" example="Mobile">%1$s</xliff:g>
         " - Default"
